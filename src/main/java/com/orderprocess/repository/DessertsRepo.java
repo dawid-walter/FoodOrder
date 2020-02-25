@@ -6,10 +6,10 @@ import com.orderprocess.foodObjects.FoodObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DessertsList implements FoodObjectsRepository {
+public class DessertsRepo implements FoodObjectsRepository {
     private final List<FoodObject> dessertList = new ArrayList<>();
 
-    public DessertsList() {
+    public DessertsRepo() {
         dessertList.add(new Dessert("Carrot Cake", 2.5));
         dessertList.add(new Dessert("Chessecake", 3.5));
         dessertList.add(new Dessert("Chocolate Gatou", 4.5));

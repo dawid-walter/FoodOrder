@@ -6,13 +6,13 @@ import com.orderprocess.foodObjects.FoodObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrinksList implements FoodObjectsRepository {
+public class DrinksRepo implements FoodObjectsRepository {
     private final List<FoodObject> drinksList = new ArrayList<>();
 
-    public DrinksList() {
+    public DrinksRepo() {
         drinksList.add(new Drink("Mojito", 3.50, false, false));
-        drinksList.add(new Drink("PinaColada",4.50, false, false));
-        drinksList.add(new Drink("Margaritha",3.80, false, false));
+        drinksList.add(new Drink("PinaColada", 4.50, false, false));
+        drinksList.add(new Drink("Margaritha", 3.80, false, false));
     }
 
     public List<FoodObject> getList() {

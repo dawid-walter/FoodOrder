@@ -1,6 +1,6 @@
 package com.orderprocess.foodObjects;
 
-public class Meal implements FoodObject{
+public class Meal implements FoodObject {
     private final String name;
     private final double price;
 

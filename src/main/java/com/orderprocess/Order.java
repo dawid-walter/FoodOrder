@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private final List<Lunch> orderedLunch = new ArrayList<>();
+    private final List<FoodObject> orderedMeals = new ArrayList<>();
     private final List<FoodObject> orderedDesserts = new ArrayList<>();
     private final List<FoodObject> orderedDrinks = new ArrayList<>();
 
-    public List<Lunch> getOrderedLunch() {
-        return orderedLunch;
+    public List<FoodObject> getOrderedMeals() {
+        return orderedMeals;
     }
 
     public List<FoodObject> getOrderedDesserts() {
@@ -24,8 +24,8 @@ public class Order {
         return orderedDrinks;
     }
 
-    public void addLunchToOrder(Lunch lunch) {
-        orderedLunch.add(lunch);
+    public void addLunchToOrder(FoodObject meal) {
+        orderedMeals.add(meal);
     }
 
     public void addDessertToOrder(FoodObject dessert) {

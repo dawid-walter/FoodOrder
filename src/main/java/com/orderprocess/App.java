@@ -1,24 +1,21 @@
 package com.orderprocess;
 
 import com.orderprocess.foodObjects.FoodObject;
-import com.orderprocess.repository.DessertsList;
-import com.orderprocess.repository.DrinksList;
+import com.orderprocess.repository.DessertsRepo;
+import com.orderprocess.repository.DrinksRepo;
 import com.orderprocess.repository.FoodObjectsRepository;
-import com.orderprocess.repository.MealsList;
+import com.orderprocess.repository.MealsRepo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    private final static FoodObjectsRepository mealsList = new MealsList();
-    private final static FoodObjectsRepository dessertsList = new DessertsList();
-    private final static FoodObjectsRepository drinksList = new DrinksList();
-    private final static List<FoodObject> orderList = new ArrayList<>();
+    private final static FoodObjectsRepository MEALS_REPO = new MealsRepo();
+    private final static FoodObjectsRepository DESSERTS_REPO = new DessertsRepo();
+    private final static FoodObjectsRepository DRINKS_REPO = new DrinksRepo();
+    private final static Order orderList = new Order();
     private final static Scanner scanner = new Scanner(System.in);
-    private final static int result = 0;
-    private static boolean ext = true;
 
     public static void main(String[] args) {
         boolean displayMenu = true;
@@ -49,7 +46,7 @@ public class App {
 
         switch (result) {
             case 1:
-                printList(mealsList);
+                printListFromRepo(MEALS_REPO);
                 System.out.println("");
 
                 System.out.println("Press enter to back to Main Menu");
@@ -57,14 +54,14 @@ public class App {
                 readKey();
                 return true;
             case 2:
-                printList(dessertsList);
+                printListFromRepo(DESSERTS_REPO);
                 System.out.println("");
 
                 System.out.println("Press enter to back to Main Menu");
                 readKey();
                 return true;
             case 3:
-                printList(drinksList);
+                printListFromRepo(DRINKS_REPO);
                 System.out.println("");
 
                 System.out.println("Press enter to back to Main Menu");
@@ -77,6 +74,7 @@ public class App {
                 }
                 return true;
             case 5:
+                printBill();
                 return true;
             case 6:
                 return false;
@@ -92,24 +90,24 @@ public class App {
     }
 
     private static boolean printOrderMenu() {
-        MealsList mealsList = new MealsList();
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Order menu, let you make an order");
+        clearScreen();
+        System.out.println("Order menu, let you place an order");
         System.out.println("====================================================================");
         System.out.println();
-        System.out.println("1) Display Your Order");
-        System.out.println("2) Add meal to your order");
-        System.out.println("3) Exit to Main Menu");
+        System.out.println(" 1) Display Your Order");
+        System.out.println(" 2) Add meal to your order");
+        System.out.println(" 3) Remove meal from your order");
+        System.out.println(" 4) Exit to Main Menu");
 
         int orderResult = scanner.nextInt();
         switch (orderResult) {
             case 1:
                 clearScreen();
-                if (orderList.size() == 0) {
+                if (orderList.getOrderedMeals().size() == 0) {
                     System.out.println("Your order is empty");
                 }
-                displayList(orderList);
+                displayList(orderList.getOrderedMeals());
                 System.out.println("Press enter to back");
                 readKey();
                 return true;
@@ -120,30 +118,59 @@ public class App {
                 }
                 return true;
             case 3:
+                boolean displayRemovefromOrderMenu = true;
+                while (displayRemovefromOrderMenu) {
+                    displayRemovefromOrderMenu = printRemoveFromOrderMenu();
+                }
+                return true;
+            case 4:
                 return false;
+
         }
         return true;
     }
 
     private static boolean printAddToOrderMenu() {
-        Scanner orderScanner = new Scanner(System.in);
+        Scanner addOrderScanner = new Scanner(System.in);
         int counter = 1;
-        for (FoodObject meal : mealsList.getList()) {
+        for (FoodObject meal : MEALS_REPO.getList()) {
             System.out.println(counter + ") " + meal);
             counter++;
         }
 
         System.out.println();
-        System.out.println("Enter a number of meal which you would like add to your order");
+        System.out.println("Enter a number of meal which you would like to add to your order");
         System.out.println("Press [f] when finished");
 
-        String index = orderScanner.nextLine();
+        String index = addOrderScanner.nextLine();
         if (index.equals("f")) return false;
-        orderList.add(mealsList.getList().get(Integer.valueOf(index) - 1));
+        orderList.getOrderedMeals().add(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
 
         System.out.println();
         System.out.println("Your order: ");
-        displayList(orderList);
+        displayList(orderList.getOrderedMeals());
+        System.out.println();
+        return true;
+    }
+
+    private static boolean printRemoveFromOrderMenu() {
+        Scanner removeOrderScanner = new Scanner(System.in);
+        int counter = 1;
+        for (FoodObject meal : MEALS_REPO.getList()) {
+            System.out.println(counter + ") " + meal);
+            counter++;
+        }
+        System.out.println();
+        System.out.println("Enter a number of meal which you would like to remove from your order");
+        System.out.println("Press [f] when finished");
+
+        String index = removeOrderScanner.nextLine();
+        if (index.equals("f")) return false;
+        orderList.getOrderedMeals().remove(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
+
+        System.out.println();
+        System.out.println("Your order: ");
+        displayList(orderList.getOrderedMeals());
         System.out.println();
         return true;
     }
@@ -160,17 +187,27 @@ public class App {
         switch (adminResult) {
             case 1:
                 clearScreen();
-                printList(mealsList);
+                printListFromRepo(MEALS_REPO);
                 System.out.println("Press enter to back");
                 readKey();
                 return true;
             case 2:
-                System.out.println("chuj");
+                System.out.println("test");
                 return true;
             case 3:
                 return false;
         }
         return true;
+    }
+
+    private static void printBill() {
+        System.out.println("Bill");
+        displayList(orderList.getOrderedMeals());
+        double total = orderList.getOrderedMeals().stream()
+                .map(e -> e.getPrice())
+                .mapToDouble(Double::doubleValue)
+                .sum();
+        System.out.println("Your total: " + total);
     }
 
     private static void clearScreen() {
@@ -197,7 +234,7 @@ public class App {
         }
     }
 
-    private static void printList(FoodObjectsRepository foodObjectsRepository) {
+    private static void printListFromRepo(FoodObjectsRepository foodObjectsRepository) {
         for (FoodObject foodObject : foodObjectsRepository.getList()) {
             System.out.println(foodObject);
         }
