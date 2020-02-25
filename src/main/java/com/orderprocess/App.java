@@ -142,9 +142,16 @@ public class App {
         System.out.println("Enter a number of meal which you would like to add to your order");
         System.out.println("Press [f] when finished");
 
-        String index = addOrderScanner.nextLine();
-        if (index.equals("f")) return false;
-        orderList.getOrderedMeals().add(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
+
+        try {
+            String index = addOrderScanner.nextLine();
+            if (index.equals("f")) return false;
+            orderList.getOrderedMeals().add(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("You pressed wrong key, please try again");
+            System.out.println("");
+            return true;
+        }
 
         System.out.println();
         System.out.println("Your order: ");
@@ -164,9 +171,15 @@ public class App {
         System.out.println("Enter a number of meal which you would like to remove from your order");
         System.out.println("Press [f] when finished");
 
-        String index = removeOrderScanner.nextLine();
-        if (index.equals("f")) return false;
-        orderList.getOrderedMeals().remove(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
+        try {
+            String index = removeOrderScanner.nextLine();
+            if (index.equals("f")) return false;
+            orderList.getOrderedMeals().remove(MEALS_REPO.getList().get(Integer.valueOf(index) - 1));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("You pressed wrong key, please try again");
+            System.out.println("");
+            return true;
+        }
 
         System.out.println();
         System.out.println("Your order: ");
