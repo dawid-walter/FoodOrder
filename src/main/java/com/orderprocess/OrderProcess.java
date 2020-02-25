@@ -15,7 +15,7 @@ public class OrderProcess {
     public void orderProcessor() {
         printIndexedList(foodObjectsRepository);
         int index = scanner.nextInt();
-        order.getOrderedLunch().g.add(foodObjectsRepository.getList().get(index - 1));
+        //order.getOrderedLunch().g.add(foodObjectsRepository.getList().get(index - 1));
 
     }
 
