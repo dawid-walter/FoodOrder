@@ -1,6 +1,6 @@
-package com.orderprocess.repository.dao;
+package com.orderprocess.repository;
 
-import com.orderprocess.repository.Cuisines;
+import com.orderprocess.domain.Cuisines;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,26 @@
-package com.orderprocess.repository;
+package com.orderprocess.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@NamedNativeQuery(
+        name = "FoodOrder.retrieveMainMealsList",
+        query = "SELECT * FROM food_order_table \n" +
+                "WHERE course_id = 1",
+        resultClass = FoodOrder.class
+)
+@NamedNativeQuery(
+        name = "FoodOrder.retrieveDrinksList",
+        query = "SELECT * FROM food_order_table \n" +
+                "WHERE course_id = 8",
+        resultClass = FoodOrder.class
+)
+@NamedNativeQuery(
+        name = "FoodOrder.retrieveDessertsList",
+        query = "SELECT * FROM food_order_table \n" +
+                "WHERE course_id = 10",
+        resultClass = FoodOrder.class
+)
 @Entity
 @Table(name = "FOOD_ORDER_TABLE")
 public class FoodOrder {
@@ -24,7 +42,7 @@ public class FoodOrder {
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "FOOD_ID", unique = true)
+    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
@@ -51,7 +69,7 @@ public class FoodOrder {
         this.price = price;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "COURSE_ID")
     public Courses getCourse() {
         return course;
@@ -61,7 +79,7 @@ public class FoodOrder {
         this.course = course;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "CUISINE_ID")
     public Cuisines getCuisine() {
         return cuisine;

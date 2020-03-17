@@ -1,10 +1,10 @@
-package com.orderprocess.foodObjects;
+package com.orderprocess.domain;
 
-public class Dessert implements FoodObject{
+public class Meal implements FoodObject {
     private final String name;
     private final double price;
 
-    public Dessert(String name, double price) {
+    public Meal(String name, double price) {
         this.name = name;
         this.price = price;
     }
@@ -19,7 +19,7 @@ public class Dessert implements FoodObject{
 
     @Override
     public String toString() {
-        return "Dessert{" +
+        return "Meal{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
                 '}';

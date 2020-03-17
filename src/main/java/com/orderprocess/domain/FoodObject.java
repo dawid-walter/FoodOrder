@@ -1,4 +1,4 @@
-package com.orderprocess.foodObjects;
+package com.orderprocess.domain;
 
 public interface FoodObject {
     String getName();

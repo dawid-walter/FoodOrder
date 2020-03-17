@@ -1,10 +1,7 @@
+/*
 package com.orderprocess;
 
 import com.orderprocess.foodObjects.FoodObject;
-import com.orderprocess.repository.DessertsRepo;
-import com.orderprocess.repository.DrinksRepo;
-import com.orderprocess.repository.FoodObjectsRepository;
-import com.orderprocess.repository.MealsRepo;
 
 import java.io.IOException;
 import java.util.List;
@@ -217,7 +214,7 @@ public class App {
         System.out.println("Bill");
         displayList(orderList.getOrderedMeals());
         double total = orderList.getOrderedMeals().stream()
-                .map(e -> e.getPrice())
+                .map(FoodObject::getPrice)
                 .mapToDouble(Double::doubleValue)
                 .sum();
         System.out.println("Your total: " + total);
@@ -258,4 +255,4 @@ public class App {
             System.out.println(meal);
         }
     }
-}
+}*/

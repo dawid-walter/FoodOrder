@@ -1,4 +1,4 @@
-package com.orderprocess.repository;
+package com.orderprocess.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -6,24 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "CUISINES_ORIGIN")
-public class Cuisines {
+@Table(name = "COURSES")
+public class Courses {
     private int id;
-    private String cuisineOrigin;
+    private CourseType courseType;
 
     private List<FoodOrder> foodOrder = new ArrayList<>();
 
-    public Cuisines() {
+    public Courses() {
     }
 
-    public Cuisines(String cuisineOrigin) {
-        this.cuisineOrigin = cuisineOrigin;
+    public Courses(CourseType courseType) {
+        this.courseType = courseType;
     }
 
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "CUISINE_ID", unique = true)
+    @Column(name = "ID", unique = true)
     public int getId() {
         return id;
     }
@@ -32,19 +32,20 @@ public class Cuisines {
         this.id = id;
     }
 
-    @Column(name = "CUISINE_ORIGIN")
-    public String getCuisineOrigin() {
-        return cuisineOrigin;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "COURSE_TYPE")
+    public CourseType getCourseType() {
+        return courseType;
     }
 
-    public void setCuisineOrigin(String cuisineOrigin) {
-        this.cuisineOrigin = cuisineOrigin;
+    public void setCourseType(CourseType courseType) {
+        this.courseType = courseType;
     }
 
     @OneToMany(targetEntity = FoodOrder.class,
-            mappedBy = "cuisine",
+            mappedBy = "course",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     public List<FoodOrder> getFoodOrder() {
         return foodOrder;
@@ -53,4 +54,6 @@ public class Cuisines {
     public void setFoodOrder(List<FoodOrder> foodOrder) {
         this.foodOrder = foodOrder;
     }
+
+
 }

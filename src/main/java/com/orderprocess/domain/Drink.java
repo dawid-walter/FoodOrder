@@ -1,6 +1,6 @@
-package com.orderprocess.foodObjects;
+package com.orderprocess.domain;
 
-public class Drink implements FoodObject{
+public class Drink implements FoodObject {
     private final String name;
     private final double price;
     private final boolean withIce;
