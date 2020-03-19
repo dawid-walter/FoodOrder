@@ -11,7 +11,7 @@ public class Courses {
     private int id;
     private CourseType courseType;
 
-    private List<FoodOrder> foodOrder = new ArrayList<>();
+    private List<FoodObject> foodObject = new ArrayList<>();
 
     public Courses() {
     }
@@ -42,17 +42,17 @@ public class Courses {
         this.courseType = courseType;
     }
 
-    @OneToMany(targetEntity = FoodOrder.class,
+    @OneToMany(targetEntity = FoodObject.class,
             mappedBy = "course",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
-    public List<FoodOrder> getFoodOrder() {
-        return foodOrder;
+    public List<FoodObject> getFoodObject() {
+        return foodObject;
     }
 
-    public void setFoodOrder(List<FoodOrder> foodOrder) {
-        this.foodOrder = foodOrder;
+    public void setFoodObject(List<FoodObject> foodObject) {
+        this.foodObject = foodObject;
     }
 
 
