@@ -44,25 +44,19 @@ public class UiMenusPrintingService {
         System.out.println("========================================================================================");
     }
 
+
     public boolean printAddToOrderMenu() {
         printFoodListWithCounter(foodAppDbService);
         System.out.println();
         System.out.println("Enter a number of meal which you would like to add to your order");
         System.out.println("Press [f] when finished");
 
-        Scanner addOrderScanner = new Scanner(System.in);
         try {
-            String index = addOrderScanner.nextLine();
-            if (index.equals("f")) {
-                clearScreen();
-                return false;
-            }
-            orderDbService.getAll().add(foodAppDbService.getAll().get(Integer.parseInt(index) - 1));
+            return orderAddProcess();
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("You pressed wrong key, please try again");
             System.out.println();
             printFoodList(orderDbService);
-            return true;
         }
         clearScreen();
         System.out.println();
@@ -78,19 +72,12 @@ public class UiMenusPrintingService {
         System.out.println();
         System.out.println("Enter a number of meal which you would like to add to your order");
         System.out.println("Press [f] when finished");
-        Scanner addOrderScanner = new Scanner(System.in);
         try {
-            String index = addOrderScanner.nextLine();
-            if (index.equals("f")) {
-                clearScreen();
-                return false;
-            }
-            orderDbService.getAll().remove(Integer.parseInt(index) - 1);
+            return orderRemoveProcess();
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
             System.out.println("You pressed wrong key, please try again");
             System.out.println();
             printFoodList(orderDbService);
-            return true;
         }
         clearScreen();
         return true;
@@ -138,6 +125,30 @@ public class UiMenusPrintingService {
         System.out.println("*&*-*&*-*&*-*&*-*&*-*&*-*&*-*&**&*-*&*-*&*-*&*-*&*-*&*-*&*-*&**&*-*&*-*&*-");
         System.out.println("*&*-*&*-*&*-*&*-*&*-*&*-*&*-*&*   " + dbService.getName() + "   -*&*-*&*-*&*-*&*-*&*-*&*-*&*");
         System.out.println("*&*-*&*-*&*-*&*-*&*-*&*-*&*-*&**&*-*&*-*&*-*&*-*&*-*&*-*&*-*&**&*-*&*-*&*-");
+    }
+
+    private boolean orderAddProcess() throws IndexOutOfBoundsException, NumberFormatException {
+        Scanner scanner = new Scanner(System.in);
+
+        String index = scanner.nextLine();
+        if (index.equals("f")) {
+            clearScreen();
+            return false;
+        }
+        orderDbService.getAll().add(foodAppDbService.getAll().get(Integer.parseInt(index) - 1));
+        return true;
+    }
+
+    private boolean orderRemoveProcess() throws IndexOutOfBoundsException, NumberFormatException {
+        Scanner scanner = new Scanner(System.in);
+
+        String index = scanner.nextLine();
+        if (index.equals("f")) {
+            clearScreen();
+            return false;
+        }
+        orderDbService.getAll().remove(Integer.parseInt(index) - 1);
+        return true;
     }
 
     public void clearScreen() {
